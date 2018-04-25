@@ -40,6 +40,9 @@ li {
 .fas {
   font-size: 2em;
 }
+.form {
+  padding: .5em;
+}
 .next {
   text-align: right;
 }
