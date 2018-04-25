@@ -4,7 +4,7 @@ A simple to-do list/scrum board app implemented in HTML/JS/CSS.
 As the Sustainability Office hires more folks that are able to contribute to software projects, a new solution will be needed to manage their workload. This app aims to satisfy that need by organizing tasks into user stories on a scrum board. Tasks are listed for the programmers based on priority, and the date in which the respective task was assigned. The app is accessible at: [http://jackstodolist.tk](http://jackstodolist.tk) and [http://sosoftware.tk](http://sosoftware.tk).
 ## How can I deploy my own to-do list app?
 It's easy!
-	1. Clone this repo, then edit the "config.json" file in the root directory of this repository.
+	1. Clone this repo, then edit the "config" variable in app.js.
 	2. Create "queued", "in-progress", and "complete" issue labels in your repositories.
 	3. Host the files on any web server.
 ## How to Use

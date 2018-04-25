@@ -73,11 +73,14 @@ $.ajaxSetup({
     error: function(err) {alert("Oops! An error occured. Check the browser's console for more information."); console.log(err);}
 });
 
-// Load configuration JSON
-var config;
-$.getJSON("../config.json", function(json) {
-    config = json;
-});
+// Load configuration
+var config = {
+  "githubUser": {
+    "username": "osu-Sustainability",
+    "password": "Dr3@mT3@m"
+  },
+  "organization": "osu-sustainability-office"
+};
 
 // Enable JQuery sortable elements
 // https://jqueryui.com/sortable/#empty-lists
