@@ -1,5 +1,5 @@
 # Jack's Prioritized To-Do List
-A simple to-do list app implemented in HTML/JS/CSS. This repo was originally cloned from [https://github.com/themaxsandelin/todo](https://github.com/themaxsandelin/todo).
+A simple to-do list app implemented in HTML/JS/CSS.
 ## Why make ANOTHER todo list app?
 This app is meant to be an easy way for others to assign me tasks in the office. It will be hosted using GitHub Pages, and it will be accessible at: [http://jackstodolist.tk](http://jackstodolist.tk) and [http://sosoftware.tk](http://sosoftware.tk).
 ## How can I deploy my own todo list app?
