@@ -6,6 +6,9 @@ body {
 h1 {
   font-size: 2em;
 }
+li {
+  list-style-type: none;
+}
 
 #complete {
   background-color: #3e2f5b;
@@ -29,6 +32,9 @@ h1 {
   border-radius: .5em;
   margin: .5em;
   padding: .5em;
+}
+.droptrue {
+  min-height: 2em;
 }
 .fas {
   font-size: 2em;

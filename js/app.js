@@ -6,6 +6,7 @@ function addProjects(repos) {
   var q = document.getElementById("queued");
   var inp = document.getElementById("in-progress");
   var c = document.getElementById("complete");
+  var g = document.getElementById("user");
 
   for (var i = 0; i < repos.length; i++) {
 
@@ -17,10 +18,8 @@ function addProjects(repos) {
     taskSelection.appendChild(e);
 
     // Add contributors to "guru" list
-    var g = document.getElementById("user");
     var repo = gh.getRepo(config.organization, repos[i].name);
     repo.getContributors().then(function(c) {
-      console.log(c.data)
       for (var i = 0; i < c.data.length; i++) {
         if (contributors.indexOf(c.data[i].login) < 0) {
           contributors.push(c.data[i].login);
@@ -39,21 +38,18 @@ function addProjects(repos) {
       // Add to the scrum board
       for (var i = 0; i < issues.data.length; i++) {
 
-        var e = document.createElement("div");
+        var e = document.createElement("li");
         e.classList.add("task");
         e.innerHTML = "Task: " + issues.data[i].title + "<br />Assignee: " + issues.data[i].assignee.login+ "<br />Repo: " + repos[i].name;
 
         switch(issues.data[i].labels[0].name) {
           case "queued":
-            q.removeChild(q.getElementsByTagName("p")[0]);
             q.appendChild(e);
             break;
           case "in-progress":
-            inp.removeChild(inp.getElementsByTagName("p")[0]);
             inp.appendChild(e);
             break;
           case "complete":
-            c.removeChild(c.getElementsByTagName("p")[0]);
             c.appendChild(e);
             break;
         }
@@ -81,6 +77,21 @@ var config;
 $.getJSON("../config.json", function(json) {
     config = json;
 });
+
+// Enable JQuery sortable elements
+// https://jqueryui.com/sortable/#empty-lists
+$( function() {
+  $( "ul.droptrue" ).sortable({
+    connectWith: "ul"
+  });
+
+  $( "ul.dropfalse" ).sortable({
+    connectWith: "ul",
+    dropOnEmpty: false
+  });
+
+  $( "#complete, #in-progress, #queued" ).disableSelection();
+} );
 
 // Login to GitHub
 var gh = new GitHub({
