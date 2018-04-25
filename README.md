@@ -5,9 +5,7 @@ As the Sustainability Office hires more folks that are able to contribute to sof
 ## How can I deploy my own to-do list app?
 It's easy! Just clone this repo, then edit the "config.json" file in the root directory of this repository. That's it!
 ## How to Use
-This app allows for our office to quickly assign tasks to programmers. To assign a task, first select a project at the top of the page. Next, select a user which will be assigned to this task. Finally, enter the desired title and description of the task and click the "Add Task" button.
-
-Automagically, a pull request will be created on the task's respective repository and the selected programmer will be assigned to that task.
+This app allows for our office to quickly assign tasks to programmers. To assign a task, first select a project at the top of the page. Next, select a user which will be assigned to this task. Finally, enter the desired title and description of the task and click the "Add Task" button. Automagically, a pull request will be created on the task's respective repository and the selected programmer will be assigned to that task.
 ## Planned Features:
 	 - Assigned "Due Dates" for tasks.
 	 - Mobile Compatibility
