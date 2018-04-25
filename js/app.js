@@ -68,12 +68,18 @@ function addProjects(repos) {
 // Selects a repo for the new task
 var addTaskStepOne = function addTaskStepOne(e) {
   task.repo = e.originalTarget.innerHTML;
+
+  document.getElementById("select-project").classList.add("blocked");
+  document.getElementById("select-user").classList.remove("blocked");
   console.log(task)
 }
 
 // Selects a contributor for the new task
 var addTaskStepTwo = function addTaskStepTwo(e) {
   task.assignees = [e.originalTarget.innerHTML];
+
+  document.getElementById("select-user").classList.add("blocked");
+  document.getElementById("enter-desc").classList.remove("blocked");
   console.log(task)
 }
 
@@ -106,6 +112,10 @@ var addTask = function addTask(e) {
 
       // Clear task object.
       task = {};
+
+      // Block steps 2 and 3
+      document.getElementById("select-project").classList.remove("blocked");
+      document.getElementById("enter-desc").classList.add("blocked");
     });
   }
 }
