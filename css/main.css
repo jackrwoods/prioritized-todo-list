@@ -1,35 +1,24 @@
 body {
-  background-color: #fffaff;
+  background-color: #131926;
   color: #fff;
   font-family: 'Open Sans', sans-serif;
 }
 h1 {
   font-size: 2em;
+  padding-bottom: .5em;
 }
 li {
   list-style-type: none;
   cursor: pointer;
 }
 
-#complete {
-  background-color: #3e2f5b;
-}
-#in-progress {
-  background-color: #3e2f5b;
-}
-#queued {
-  background-color: #3e2f5b;
-}
-#task-creation {
-  Background-color: #fe5f00;
-}
-
 .blocked {
-  color: #5A9A92;
+  color: #658CC0;
+  pointer-events: none;
 }
 .col-sm {
+  align-content: center;
   text-align: center;
-  background-color: #303036;
   border-radius: .5em;
   margin: .5em;
   padding: .5em;
@@ -38,24 +27,34 @@ li {
   min-height: 2em;
 }
 .fas {
+  position: absolute;
+  top: 50%;
+  right: 0%;
   font-size: 2em;
 }
 .form {
   padding: .5em;
 }
-.next {
-  text-align: right;
-}
-.next img {
-  height: 3em;
-  float: right;
-}
 .item {
-  width: 100%;
-  background-color: #30bced;
+  background-color: #295FA8;
   margin-bottom: .25em;
   border-radius: 5em;
   padding-left: 1em;
   padding-right: 1em;
   cursor: pointer;
+}
+.item:hover {
+  background-color: #a5d8ff;
+  color: #000;
+}
+.next {
+  text-align: right;
+  vertical-align: middle;
+}
+.next img {
+  height: 3em;
+  float: right;
+}
+.row .tall {
+  height: 100%;
 }

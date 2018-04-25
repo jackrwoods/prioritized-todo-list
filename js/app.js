@@ -14,7 +14,11 @@ function addProjects(repos) {
     var e = document.createElement("div");
     e.classList.add("item");
     e.classList.add("project");
-    e.innerHTML = repos[i].name;
+    if(repos[i].name.length > 20) {
+      e.innerHTML = repos[i].name.substring(0, 20) + ". . .";
+    } else {
+      e.innerHTML = repos[i].name;
+    }
     taskSelection.appendChild(e);
     e.addEventListener("click", addTaskStepOne);
 
