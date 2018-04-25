@@ -70,7 +70,7 @@ function addEventListeners() {
 // Set the global configs to synchronous requests
 $.ajaxSetup({
     async: false,
-    "error": function() {alert("error");}
+    error: function(err) {alert(err);}
 });
 
 // Load configuration JSON
