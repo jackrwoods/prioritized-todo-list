@@ -1,0 +1,42 @@
+body {
+  background-color: #fffaff;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+}
+h1 {
+  font-size: 2em;
+}
+
+#complete {
+  background-color: #3e2f5b;
+}
+#in-progress {
+  background-color: #3e2f5b;
+}
+#staged {
+  background-color: #3e2f5b;
+}
+#task-creation {
+  Background-color: #fe5f00;
+}
+
+.blocked {
+  color: #5A9A92;
+}
+.col-sm {
+  text-align: center;
+  background-color: #303036;
+  border-radius: .5em;
+  margin: .5em;
+  padding: .5em;
+}
+.next img {
+  height: 3em;
+  float: right;
+}
+.item {
+  width: 14em;
+  background-color: #30bced;
+  margin-bottom: .25em;
+  border-radius: 5em;
+}

@@ -10,6 +10,7 @@ This app allows for our office to quickly assign tasks to programmers. To assign
 Automagically, a pull request will be created on the task's respective repository and the selected programmer will be assigned to that task.
 ## Planned Features:
 	 - Assigned "Due Dates" for tasks.
+	 - Mobile Compatibility
 	 - Add software development statistics such as features completed per week, etc.
 	 - GitHub Repo Integration - Users will be able to create & assign pull requests on all of the Sustainability Office repos. This will allow for easy feature implementation and version management.
 	 - Multiple Users - Allow for multiple programmers in the SO to manage pull requests collaboratively.
