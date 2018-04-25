@@ -13,7 +13,7 @@ h1 {
 #in-progress {
   background-color: #3e2f5b;
 }
-#staged {
+#queued {
   background-color: #3e2f5b;
 }
 #task-creation {
@@ -30,13 +30,18 @@ h1 {
   margin: .5em;
   padding: .5em;
 }
+.fas {
+  font-size: 2em;
+}
 .next img {
   height: 3em;
   float: right;
 }
 .item {
-  width: 14em;
+  width: 100%;
   background-color: #30bced;
   margin-bottom: .25em;
   border-radius: 5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
