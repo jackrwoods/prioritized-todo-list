@@ -73,7 +73,7 @@ var addTaskStepOne = function addTaskStepOne(e) {
 
 // Selects a contributor for the new task
 var addTaskStepTwo = function addTaskStepTwo(e) {
-  task.assignees = e.originalTarget.innerHTML;
+  task.assignees = [e.originalTarget.innerHTML];
   console.log(task)
 }
 
@@ -95,14 +95,17 @@ var addTask = function addTask(e) {
 
     // Add issue to repo
     task.labels = ["queued"];
-    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(issue) {
+    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(e) {
       // If the issue is created, add it to the scrum board asynchronously.
       var q = document.getElementById("queued");
       var e = document.createElement("li");
       e.classList.add("task");
-      e.innerHTML = "Task: " + task.title + "<br />Assignee: " + task.assignee + "<br />Repo: " + task.repo;
+      e.innerHTML = "Task: " + task.title + "<br />Assignee: " + task.assignees[0] + "<br />Repo: " + task.repo;
       q.appendChild(e);
       e.addEventListener("mouseup", updateTask);
+
+      // Clear task object.
+      task = {};
     });
   }
 }
