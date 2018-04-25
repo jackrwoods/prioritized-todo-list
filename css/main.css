@@ -33,6 +33,9 @@ h1 {
 .fas {
   font-size: 2em;
 }
+.next {
+  text-align: right;
+}
 .next img {
   height: 3em;
   float: right;

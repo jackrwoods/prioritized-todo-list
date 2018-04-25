@@ -16,6 +16,23 @@ function addProjects(repos) {
     e.innerHTML = repos[i].name;
     taskSelection.appendChild(e);
 
+    // Add contributors to "guru" list
+    var g = document.getElementById("user");
+    var repo = gh.getRepo(config.organization, repos[i].name);
+    repo.getContributors().then(function(c) {
+      console.log(c.data)
+      for (var i = 0; i < c.data.length; i++) {
+        if (contributors.indexOf(c.data[i].login) < 0) {
+          contributors.push(c.data[i].login);
+          var e = document.createElement("div");
+          e.classList.add("item");
+          e.classList.add("user");
+          e.innerHTML = c.data[i].login;
+          g.appendChild(e);
+        }
+      }
+    });
+
     // Add active pull requests to scrum board
     var issues = gh.getIssues(config.organization, repos[i].name).listIssues().then(function(issues) {
 
@@ -73,6 +90,7 @@ var gh = new GitHub({
 
 // Get list of organization repos
 var org = gh.getOrganization('osu-sustainability-office');
+var contributors = [];
 org.getRepos(function(err, repos) {
   if (err) console.log(err);
 
