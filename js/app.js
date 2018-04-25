@@ -36,14 +36,16 @@ function addProjects(repos) {
 
     // Add active pull requests to scrum board
     var issues = gh.getIssues(config.organization, repos[i].name).listIssues().then(function(issues) {
-
       // Add to the scrum board
       for (var i = 0; i < issues.data.length; i++) {
 
         var e = document.createElement("li");
         e.classList.add("task");
         e.innerHTML = "Task: " + issues.data[i].title + "<br />Assignee: " + issues.data[i].assignee.login+ "<br />Repo: " + repos[i].name;
-
+        e.setAttribute("title", issues.data[i].title);
+        e.setAttribute("assignee", issues.data[i].assignee.login);
+        e.setAttribute("repo", repos[i].name);
+        e.setAttribute("id", issues.data[i].number);
         switch(issues.data[i].labels[0].name) {
           case "queued":
             q.appendChild(e);
@@ -67,20 +69,18 @@ function addProjects(repos) {
 
 // Selects a repo for the new task
 var addTaskStepOne = function addTaskStepOne(e) {
-  task.repo = e.originalTarget.innerHTML;
+  task.repo = e.currentTarget.innerHTML;
 
   document.getElementById("select-project").classList.add("blocked");
   document.getElementById("select-user").classList.remove("blocked");
-  console.log(task)
 }
 
 // Selects a contributor for the new task
 var addTaskStepTwo = function addTaskStepTwo(e) {
-  task.assignees = [e.originalTarget.innerHTML];
+  task.assignees = [e.currentTarget.innerHTML];
 
   document.getElementById("select-user").classList.add("blocked");
   document.getElementById("enter-desc").classList.remove("blocked");
-  console.log(task)
 }
 
 // Adds the task to the scrum board, and creates an issue on the specified repo
@@ -101,11 +101,15 @@ var addTask = function addTask(e) {
 
     // Add issue to repo
     task.labels = ["queued"];
-    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(e) {
+    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(e, a) {
       // If the issue is created, add it to the scrum board asynchronously.
       var q = document.getElementById("queued");
       var e = document.createElement("li");
       e.classList.add("task");
+      e.setAttribute("title", task.title);
+      e.setAttribute("assignee", task.asignees[0]);
+      e.setAttribute("repo", task.repo);
+      e.setAttribute("id", a.number);
       e.innerHTML = "Task: " + task.title + "<br />Assignee: " + task.assignees[0] + "<br />Repo: " + task.repo;
       q.appendChild(e);
       e.addEventListener("mouseup", updateTask);
@@ -124,7 +128,21 @@ var addTask = function addTask(e) {
 // scrum board, with their mouse. This updates the task's corresponding issue
 // in its repo with a new status label.
 var updateTask = function updateTask(e) {
-  console.log("Update")
+  var t = e.currentTarget;
+  var issue = gh.getIssues(config.organization, t.getAttribute("repo"));
+  issue.getIssue(t.getAttribute("id")).then(function(iObj) {
+    issue.getLabel(t.parentElement.id).then(function(label) {
+      // Update issue with new label
+      iObj.data.labels[0] = label.data;
+      var newIssue = {
+        labels: [label.data]
+      }
+      issue.editIssue(iObj.data.number, newIssue).then(function(err) {
+        console.log(err)
+      });
+    });
+  });
+
 }
 
 /*
