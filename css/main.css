@@ -57,4 +57,5 @@ li {
   border-radius: 5em;
   padding-left: 1em;
   padding-right: 1em;
+  cursor: pointer;
 }

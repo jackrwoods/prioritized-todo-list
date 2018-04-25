@@ -16,6 +16,7 @@ function addProjects(repos) {
     e.classList.add("project");
     e.innerHTML = repos[i].name;
     taskSelection.appendChild(e);
+    e.addEventListener("click", addTaskStepOne);
 
     // Add contributors to "guru" list
     var repo = gh.getRepo(config.organization, repos[i].name);
@@ -28,6 +29,7 @@ function addProjects(repos) {
           e.classList.add("user");
           e.innerHTML = c.data[i].login;
           g.appendChild(e);
+          e.addEventListener("click", addTaskStepTwo);
         }
       }
     });
@@ -53,15 +55,64 @@ function addProjects(repos) {
             c.appendChild(e);
             break;
         }
+
+        e.addEventListener("mouseup", updateTask);
       }
+    });
+  }
+
+  // Add event listener for "Add Task" button
+  document.getElementById("add-task").addEventListener("click", addTask);
+}
+
+// Selects a repo for the new task
+var addTaskStepOne = function addTaskStepOne(e) {
+  task.repo = e.originalTarget.innerHTML;
+  console.log(task)
+}
+
+// Selects a contributor for the new task
+var addTaskStepTwo = function addTaskStepTwo(e) {
+  task.assignees = e.originalTarget.innerHTML;
+  console.log(task)
+}
+
+// Adds the task to the scrum board, and creates an issue on the specified repo
+// Assigns the selected user to this task
+var addTask = function addTask(e) {
+  var title = document.getElementById("task-title");
+  var desc = document.getElementById("task-desc");
+
+  // If the title box has been populated
+  if(title.value.length > 0) {
+    // Store text in task object
+    task.title = title.value;
+    task.body = desc.value;
+
+    // Clear textboxes
+    title.value = "";
+    desc.value = "";
+
+    // Add issue to repo
+    task.labels = ["queued"];
+    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(issue) {
+      // If the issue is created, add it to the scrum board asynchronously.
+      var q = document.getElementById("queued");
+      var e = document.createElement("li");
+      e.classList.add("task");
+      e.innerHTML = "Task: " + task.title + "<br />Assignee: " + task.assignee + "<br />Repo: " + task.repo;
+      q.appendChild(e);
+      e.addEventListener("mouseup", updateTask);
     });
   }
 }
 
-function addEventListeners() {
-
+// This function is called when the user releases a task, located on the
+// scrum board, with their mouse. This updates the task's corresponding issue
+// in its repo with a new status label.
+var updateTask = function updateTask(e) {
+  console.log("Update")
 }
-
 
 /*
  * Initial Setup
@@ -103,6 +154,9 @@ var gh = new GitHub({
   password: config.githubUser.password
 });
 
+// This task is manipulated when a new task is created.
+var task = {};
+
 // Get list of organization repos
 var org = gh.getOrganization('osu-sustainability-office');
 var contributors = [];
@@ -111,7 +165,4 @@ org.getRepos(function(err, repos) {
 
   // Populate projects list and scrum board with repos
   addProjects(repos);
-
-  // Add event listeners to interactive elements
-  addEventListeners();
 });
