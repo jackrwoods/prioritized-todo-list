@@ -46,12 +46,13 @@ function addProjects(repos) {
         var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
         var e = document.createElement("li");
         e.classList.add("task");
+        e.classList.add(issues.data[j].labels[0].name);
         e.innerHTML = "Task: " + issues.data[j].title + "<br />Assignee: " + issues.data[j].assignee.login+ "<br />Repo: " + repoName;
         e.setAttribute("title", issues.data[j].title);
         e.setAttribute("assignee", issues.data[j].assignee.login);
         e.setAttribute("repo", repoName);
         e.setAttribute("id", issues.data[j].number);
-        switch(issues.data[j].labels[0].name) {
+        switch(issues.data[j].labels[1].name) {
           case "queued":
             q.appendChild(e);
             break;
@@ -70,6 +71,12 @@ function addProjects(repos) {
 
   // Add event listener for "Add Task" button
   document.getElementById("add-task").addEventListener("click", addTask);
+
+  // Event listeners for priority buttons
+  var buttons = document.getElementsByClassName("btn");
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", changePriority);
+  }
 }
 
 // Selects a repo for the new task
@@ -85,6 +92,17 @@ var addTaskStepTwo = function addTaskStepTwo(e) {
 
   document.getElementById("select-user").classList.add("blocked");
   document.getElementById("enter-desc").classList.remove("blocked");
+}
+
+var changePriority = function(e) {
+  task.priority = e.currentTarget.id;
+  var buttons = document.getElementsByClassName("btn");
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].classList.contains("active")) {
+      buttons[i].classList.remove("active");
+    }
+  }
+  e.currentTarget.classList.add("active");
 }
 
 // Adds the task to the scrum board, and creates an issue on the specified repo
@@ -104,13 +122,14 @@ var addTask = function addTask(e) {
     desc.value = "";
 
     // Add issue to repo
-    task.labels = ["queued"];
+    task.labels = ["queued", task.priority];
     var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(err, a) {
       // If the issue is created, add it to the scrum board asynchronously.
       console.log(err)
       var q = document.getElementById("queued");
       var e = document.createElement("li");
       e.classList.add("task");
+      e.classList.add(task.labels[1]);
       e.setAttribute("title", task.title);
       e.setAttribute("assignee", task.assignees[0]);
       e.setAttribute("repo", task.repo);

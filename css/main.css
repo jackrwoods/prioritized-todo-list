@@ -1,5 +1,5 @@
-/*          Black  Dark Blue  Green     Red   Light Blue
- * Colors: #131926, #295FA8, #32993F, #AA0006, #A5D8FF
+/*          Black  Dark Blue  Green    Yellow    Red   Light Blue
+ * Colors: #131926, #295FA8, #28A745, #FFC10E, #DC3545, #A5D8FF
  */
 
 body {
@@ -93,6 +93,21 @@ ul {
   height: 3em;
   float: right;
 }
+.priority-high {
+  background-color: #DC3545;
+  color: #131926;
+}
+.priority-med {
+  background-color: #FFC10E;
+  color: #131926;
+}
+.priority-low {
+  background-color: #28A745;
+  color: #131926;
+}
 .row .tall {
   height: 100%;
+}
+.task {
+  margin: .5em;
 }
