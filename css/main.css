@@ -43,6 +43,9 @@ ul {
   color: #295FA8;
   color: #fff;
 }
+#features {
+  padding: 1em;
+}
 
 .blocked {
   color: #658CC0;
