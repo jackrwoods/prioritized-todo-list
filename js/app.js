@@ -197,10 +197,10 @@ $.ajaxSetup({
 // Load configuration
 var config = {
   "githubUser": {
-    "username": "osu-Sustainability",
-    "password": "Dr3@mT3@m"
+    "username": "YOUR USERNAME HERE", // ex: osu-sustainability or jackrwoods
+    "password": "YOUR PASSWORD HERE" // Password for the account used above.
   },
-  "organization": "osu-sustainability-office"
+  "organization": "YOUR ORGANIZATION HERE" // ex: osu-sustainability-office
 };
 
 // Enable JQuery sortable elements
