@@ -9,9 +9,9 @@ It's easy!
 	3. Host the files on any web server.
 ## How to Use
 This app allows for our office to quickly assign tasks to programmers. To assign a task, first select a project at the top of the page. Next, select a user which will be assigned to this task. Finally, enter the desired title and description of the task and click the "Add Task" button. Automagically, an issue will be created on the task's respective repository and the selected programmer will be assigned to that task.
-## Planned Features:
-	 - Assigned "Due Dates" for tasks.
-	 - Add software development statistics such as features completed per week, etc.
+## Features:
+	 - Assigned "Due Dates" for tasks (planned).
+	 - Add software development statistics such as features completed per week, etc (planned).
 	 - GitHub Repo Integration - Users will be able to create & assign issues on all of the Sustainability Office repos. This will allow for easy feature implementation and version management.
 	 - Multiple Users - Allow for multiple programmers in the SO to manage issues collaboratively.
 	 - Easy Deployment - Add functionality for easy deployment so others can host their own to-do lists!

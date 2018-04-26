@@ -46,13 +46,21 @@ function addProjects(repos) {
         var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
         var e = document.createElement("li");
         e.classList.add("task");
-        e.classList.add(issues.data[j].labels[0].name);
         e.innerHTML = "Task: " + issues.data[j].title + "<br />Assignee: " + issues.data[j].assignee.login+ "<br />Repo: " + repoName;
         e.setAttribute("title", issues.data[j].title);
         e.setAttribute("assignee", issues.data[j].assignee.login);
         e.setAttribute("repo", repoName);
         e.setAttribute("id", issues.data[j].number);
-        switch(issues.data[j].labels[1].name) {
+
+        // Github shuffles the order of the labels for priority and scrum location.
+        var labelIndex = 1;
+        var priorityIndex = 0;
+        if (issues.data[j].labels[0].name.indexOf("priority") < 0) {
+          labelIndex = 0;
+          priorityIndex = 1;
+        }
+        e.classList.add(issues.data[j].labels[priorityIndex].name);
+        switch(issues.data[j].labels[labelIndex].name) {
           case "queued":
             q.appendChild(e);
             break;
@@ -125,7 +133,6 @@ var addTask = function addTask(e) {
     task.labels = ["queued", task.priority];
     var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(err, a) {
       // If the issue is created, add it to the scrum board asynchronously.
-      console.log(err)
       var q = document.getElementById("queued");
       var e = document.createElement("li");
       e.classList.add("task");
@@ -157,9 +164,10 @@ var updateTask = function updateTask(e) {
   issue.getIssue(t.getAttribute("id")).then(function(iObj) {
     issue.getLabel(t.parentElement.id).then(function(label) {
       // Update issue with new label
-      iObj.data.labels[0] = label.data;
+      var priorityIndex = 0;
+      if (iObj.data.labels[0].name.indexOf("priority") < 0) priorityIndex = 1;
       var newIssue = {
-        labels: [label.data]
+        labels: [label.data, iObj.data.labels[priorityIndex]]
       }
       issue.editIssue(iObj.data.number, newIssue).then(function(err) {
         console.log(err)
