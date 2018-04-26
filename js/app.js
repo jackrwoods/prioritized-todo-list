@@ -1,6 +1,7 @@
 /*
  * Function Definitions
  */
+ var k = 0;
 function addProjects(repos) {
   var taskSelection = document.getElementById("repos");
   var q = document.getElementById("queued");
@@ -8,23 +9,22 @@ function addProjects(repos) {
   var c = document.getElementById("complete");
   var g = document.getElementById("user");
 
-  for (var i = 0; i < repos.length; i++) {
-
+  for (k = 0; k < repos.length; k++) {
     // Add to the task creation project list
     var e = document.createElement("div");
     e.classList.add("item");
     e.classList.add("project");
-    e.setAttribute("repo", repos[i].name);
-    if(repos[i].name.length > 20) {
-      e.innerHTML = repos[i].name.substring(0, 20) + ". . .";
+    e.setAttribute("repo", repos[k].name);
+    if(repos[k].name.length > 20) {
+      e.innerHTML = repos[k].name.substring(0, 20) + ". . .";
     } else {
-      e.innerHTML = repos[i].name;
+      e.innerHTML = repos[k].name;
     }
     taskSelection.appendChild(e);
     e.addEventListener("click", addTaskStepOne);
 
     // Add contributors to "guru" list
-    var repo = gh.getRepo(config.organization, repos[i].name);
+    var repo = gh.getRepo(config.organization, repos[k].name);
     repo.getContributors().then(function(c) {
       for (var i = 0; i < c.data.length; i++) {
         if (contributors.indexOf(c.data[i].login) < 0) {
@@ -40,18 +40,18 @@ function addProjects(repos) {
     });
 
     // Add active pull requests to scrum board
-    var issues = gh.getIssues(config.organization, repos[i].name).listIssues().then(function(issues) {
-      // Add to the scrum board
-      for (var i = 0; i < issues.data.length; i++) {
-
+    var issue = gh.getIssues(config.organization, repos[k].name);
+    issue.listIssues().then(function(issues) {
+      for (var j = 0; j < issues.data.length; j++) {
+        var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
         var e = document.createElement("li");
         e.classList.add("task");
-        e.innerHTML = "Task: " + issues.data[i].title + "<br />Assignee: " + issues.data[i].assignee.login+ "<br />Repo: " + repos[i].name;
-        e.setAttribute("title", issues.data[i].title);
-        e.setAttribute("assignee", issues.data[i].assignee.login);
-        e.setAttribute("repo", repos[i].name);
-        e.setAttribute("id", issues.data[i].number);
-        switch(issues.data[i].labels[0].name) {
+        e.innerHTML = "Task: " + issues.data[j].title + "<br />Assignee: " + issues.data[j].assignee.login+ "<br />Repo: " + repoName;
+        e.setAttribute("title", issues.data[j].title);
+        e.setAttribute("assignee", issues.data[j].assignee.login);
+        e.setAttribute("repo", repoName);
+        e.setAttribute("id", issues.data[j].number);
+        switch(issues.data[j].labels[0].name) {
           case "queued":
             q.appendChild(e);
             break;
