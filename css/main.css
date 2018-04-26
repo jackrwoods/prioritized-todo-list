@@ -7,9 +7,29 @@ h1 {
   font-size: 2em;
   padding-bottom: .5em;
 }
+input {
+  background-color: #295FA8;
+  color: #fff;
+  border: none;
+  border-radius: .5em;
+  width: 100%;
+}
+textarea {
+  background-color: #295FA8;
+  color: #fff;
+  border: none;
+  border-radius: .5em;
+  width: 100%;
+  resize: none;
+}
 li {
   list-style-type: none;
   cursor: pointer;
+}
+
+#add-task {
+  color: #295FA8;
+  color: #fff;
 }
 
 .blocked {
@@ -22,6 +42,9 @@ li {
   border-radius: .5em;
   margin: .5em;
   padding: .5em;
+}
+.clicked {
+  background-color: #32993F;
 }
 .droptrue {
   min-height: 2em;

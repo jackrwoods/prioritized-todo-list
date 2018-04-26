@@ -14,6 +14,7 @@ function addProjects(repos) {
     var e = document.createElement("div");
     e.classList.add("item");
     e.classList.add("project");
+    e.setAttribute("repo", repos[i].name);
     if(repos[i].name.length > 20) {
       e.innerHTML = repos[i].name.substring(0, 20) + ". . .";
     } else {
@@ -73,8 +74,7 @@ function addProjects(repos) {
 
 // Selects a repo for the new task
 var addTaskStepOne = function addTaskStepOne(e) {
-  task.repo = e.currentTarget.innerHTML;
-
+  task.repo = e.currentTarget.getAttribute("repo");
   document.getElementById("select-project").classList.add("blocked");
   document.getElementById("select-user").classList.remove("blocked");
 }
@@ -105,13 +105,14 @@ var addTask = function addTask(e) {
 
     // Add issue to repo
     task.labels = ["queued"];
-    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(e, a) {
+    var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(err, a) {
       // If the issue is created, add it to the scrum board asynchronously.
+      console.log(err)
       var q = document.getElementById("queued");
       var e = document.createElement("li");
       e.classList.add("task");
       e.setAttribute("title", task.title);
-      e.setAttribute("assignee", task.asignees[0]);
+      e.setAttribute("assignee", task.assignees[0]);
       e.setAttribute("repo", task.repo);
       e.setAttribute("id", a.number);
       e.innerHTML = "Task: " + task.title + "<br />Assignee: " + task.assignees[0] + "<br />Repo: " + task.repo;
