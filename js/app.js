@@ -131,7 +131,11 @@ var addTask = function addTask(e) {
 
     // Add issue to repo
     task.labels = ["queued", task.priority];
+    var priority_temp = task.priority;
+    delete task.priority; // If this isn't deleted, the task object is unrecognizable by GitHub.
+    console.log(task)
     var repo = gh.getIssues(config.organization, task.repo).createIssue(task, function(err, a) {
+      console.log(err)
       // If the issue is created, add it to the scrum board asynchronously.
       var q = document.getElementById("queued");
       var e = document.createElement("li");
@@ -151,6 +155,9 @@ var addTask = function addTask(e) {
       // Block steps 2 and 3
       document.getElementById("select-project").classList.remove("blocked");
       document.getElementById("enter-desc").classList.add("blocked");
+
+      // Restore priority
+      task.priority = priority_temp;
     });
   }
 }
@@ -218,7 +225,9 @@ var gh = new GitHub({
 });
 
 // This task is manipulated when a new task is created.
-var task = {};
+var task = {
+  priority: "priority-med"
+};
 
 // Get list of organization repos
 var org = gh.getOrganization('osu-sustainability-office');
