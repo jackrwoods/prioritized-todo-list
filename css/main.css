@@ -25,6 +25,14 @@ textarea {
 li {
   list-style-type: none;
   cursor: pointer;
+  background-color: #295FA8;
+  border-radius: .5em;
+  padding: .5em;
+}
+ul {
+  background-color: #3d424d;
+  border-radius: .5em;
+  padding: .5em;
 }
 
 #add-task {
