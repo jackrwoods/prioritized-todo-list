@@ -3,6 +3,11 @@
  */
  var k = 0;
 function addProjects(repos) {
+  // Look for url filters, and save username into user variable
+  var url = new URL(window.location.href);
+  var user = url.searchParams.get("user");
+  console.log(user)
+
   var taskSelection = document.getElementById("repos");
   var q = document.getElementById("queued");
   var inp = document.getElementById("in-progress");
@@ -43,36 +48,38 @@ function addProjects(repos) {
     var issue = gh.getIssues(config.organization, repos[k].name);
     issue.listIssues().then(function(issues) {
       for (var j = 0; j < issues.data.length; j++) {
-        var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
-        var e = document.createElement("li");
-        e.classList.add("task");
-        e.innerHTML = "Task: " + issues.data[j].title + "<br />Assignee: " + issues.data[j].assignee.login+ "<br />Repo: " + repoName;
-        e.setAttribute("title", issues.data[j].title);
-        e.setAttribute("assignee", issues.data[j].assignee.login);
-        e.setAttribute("repo", repoName);
-        e.setAttribute("id", issues.data[j].number);
+        if (user == null || issues.data[j].assignee.login == user) {
+          var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
+          var e = document.createElement("li");
+          e.classList.add("task");
+          e.innerHTML = "Task: " + issues.data[j].title + "<br />Assignee: " + issues.data[j].assignee.login+ "<br />Repo: " + repoName;
+          e.setAttribute("title", issues.data[j].title);
+          e.setAttribute("assignee", issues.data[j].assignee.login);
+          e.setAttribute("repo", repoName);
+          e.setAttribute("id", issues.data[j].number);
 
-        // Github shuffles the order of the labels for priority and scrum location.
-        var labelIndex = 1;
-        var priorityIndex = 0;
-        if (issues.data[j].labels[0].name.indexOf("priority") < 0) {
-          labelIndex = 0;
-          priorityIndex = 1;
-        }
-        e.classList.add(issues.data[j].labels[priorityIndex].name);
-        switch(issues.data[j].labels[labelIndex].name) {
-          case "queued":
-            q.appendChild(e);
-            break;
-          case "in-progress":
-            inp.appendChild(e);
-            break;
-          case "complete":
-            c.appendChild(e);
-            break;
-        }
+          // Github shuffles the order of the labels for priority and scrum location.
+          var labelIndex = 1;
+          var priorityIndex = 0;
+          if (issues.data[j].labels[0].name.indexOf("priority") < 0) {
+            labelIndex = 0;
+            priorityIndex = 1;
+          }
+          e.classList.add(issues.data[j].labels[priorityIndex].name);
+          switch(issues.data[j].labels[labelIndex].name) {
+            case "queued":
+              q.appendChild(e);
+              break;
+            case "in-progress":
+              inp.appendChild(e);
+              break;
+            case "complete":
+              c.appendChild(e);
+              break;
+          }
 
-        e.addEventListener("mouseup", updateTask);
+          e.addEventListener("mouseup", updateTask);
+        }
       }
     });
   }
