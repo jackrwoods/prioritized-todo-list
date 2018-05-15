@@ -48,7 +48,7 @@ function addProjects(repos) {
     var issue = gh.getIssues(config.organization, repos[k].name);
     issue.listIssues().then(function(issues) {
       for (var j = 0; j < issues.data.length; j++) {
-        if (user == null || issues.data[j].assignee.login == user) {
+       if ((issues.data[j].pull_request == null) && (user == null || issues.data[j].assignee.login == user)) { 
           var repoName = issues.data[j].repository_url.slice(issues.data[j].repository_url.lastIndexOf("/") + 1, issues.data[j].repository_url.length);
           var e = document.createElement("li");
           e.classList.add("task");
