@@ -12,7 +12,7 @@ For developers, this app offers a functional scrum board with GitHub integration
  - Simple GitHub issue management - open issues are automatically displayed from all GitHub repos in an organization, and labels can be assigned & re-assigned quickly.
 
 ## Why make ANOTHER to-do list app?
-As the Oregon State University Sustainability Office hires more folks that are able to contribute to software projects, a new solution will be needed to manage their workload. This app aims to satisfy that need by organizing tasks into user stories on a scrum board. Tasks are listed for the programmers based on priority, and the date in which the respective task was assigned. The app is accessible at: [http://sosoftware.tk](http://sosoftware.tk).
+As the Oregon State University Sustainability Office hires more folks that are able to contribute to software projects, a new solution will be needed to manage their workload. This app aims to satisfy that need by organizing tasks into user stories on a scrum board. Tasks are listed for the programmers based on priority, and the date in which the respective task was assigned. The app is accessible at: [http://sosoftware.cf](http://sosoftware.cf).
 
 ## How can I deploy my own to-do list app?
 It's easy!
